@@ -1,0 +1,12 @@
+#!/bin/sh
+host="localhost"
+port="${1:-5555}"
+exec ./tcplisten "$host" "$port" \
+  ./loop-forever 1 sh -c '
+    set -e
+    echo $$ > worker.pid
+    test -e ./root || ln -s root.a root
+    printf "serving $0 from " ; readlink ./root
+    cd ./root
+    exec ../example-worker
+  ' "http://$host:$port/index.txt"

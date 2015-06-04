@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Determine which of [root.a,root.b] is the current root,
+# and which will be the new root.
+root_cur=`readlink root`
+if [ "$root_cur" = "root.a" ]; then
+  root_new="root.b"
+else
+  root_new="root.a"
+fi
+
+# TODO here's where you would do e.g. a git update in $root_new.
+
+# Create the root symlinks. Atomically move them into place.
+mkdir -p tmp
+ln -s "$root_new" tmp/root
+ln -s "$root_cur" tmp/root.unused
+mv tmp/root .
+mv tmp/root.unused .
+rmdir tmp
+
+# Bounce the worker.
+test -f worker.pid && kill -HUP `cat worker.pid`
+
+exit 0

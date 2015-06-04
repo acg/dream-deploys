@@ -1,0 +1,5 @@
+#!/bin/sh
+delay="$1" ; shift
+while true; do
+  "$@" || sleep "$delay"
+done
