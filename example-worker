@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+'''
+A barebones HTTP server that calls accept(2) on a stdin listen socket.
+'''
 
 import socket, signal, errno, os, sys, re
 
