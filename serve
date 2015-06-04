@@ -10,5 +10,5 @@ exec ./tcplisten "$host" "$port" \
     echo $$ > worker.pid
     printf "serving $0 from " ; readlink ./root
     cd ./root
-    exec ./example-worker
+    exec ./example-worker ./htdocs
   ' "http://$host:$port/index.txt"

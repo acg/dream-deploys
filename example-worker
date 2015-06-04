@@ -8,6 +8,7 @@ import socket, signal, errno, os, sys, re
 got_sighup = False
 
 def main():
+  htdocs = sys.argv[1]
   signal.signal(signal.SIGHUP, signal_handler)
   s = socket.fromfd(0, socket.AF_INET, socket.SOCK_STREAM)
   count = 1
@@ -26,7 +27,7 @@ def main():
     count += 1
     # Generate an HTTP response and write it back.
     m = re.compile('^GET (\S+) HTTP/1.1\r?\n').match(req)
-    path = m.group(1).lstrip('/') if m else None
+    path = htdocs+'/'+m.group(1).lstrip('/') if m else None
     if path:
       try:
         rsp = 'HTTP/1.1 200 OK\r\n\r\n'+file(path).read()
