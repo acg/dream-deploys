@@ -24,10 +24,12 @@ def main():
         raise
     print >> sys.stderr, 'worker %d request %d' % (os.getpid(),count)
     count += 1
-    req = None
+    # Note: retrying a read interrupted by a signal is
+    # typically more subtle than this example.
+    req = ''
     while not req:
       try:
-        req = c.recv(4096)
+        req += c.recv(4096)
       except socket.error, e:
         if e.errno == errno.EINTR or e.errno == errno.EAGAIN:
           continue
