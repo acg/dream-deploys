@@ -7,7 +7,9 @@ They're not hard to do. So why do most shops struggle on, afraid to deploy becau
 <img src="./img/donnie-darko-not-afraid-anymore.jpg" width="100%"/>
 </div>
 
-This is a tiny demo project. It's purpose is to convince you that Dream Deploys are not only possible, they're easy.
+### You Don't Need Much
+
+This is a tiny demo to convince you that Dream Deploys are not only possible, they're easy.
 
 To live the dream, you don't need much:
 
