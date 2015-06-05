@@ -65,7 +65,7 @@ Note: the number of web frameworks that force you to call `listen(2)` in your Bi
 
 #### How does the atomic part work?
 
-A given request will either be served by the old server process or the new server process. The question is whether the old process might possibly see new static files, or the new process might see old static files. We can't update any of the static files in-place, or one or the other problematic scenario will happen. This forces us to keep two complete copies of the static files, an old copy and a new copy.
+A given request will either be served by the old server process or the new server process. The question is whether the old process might possibly see new static files, or the new process might see old static files. We can't update any of the static files in-place, or one of these problematic scenarios will happen. This forces us to keep two complete copies of the static files, an old copy and a new copy.
 
 While we're updating the new static files, we don't want the server to start serving them. If the old server process is restarted at this point, intentionally or accidentally, it should continue to serve the old static files. The trick, then, is to make the "throw the switch" act of cutting over from old to new files atomic.
 
