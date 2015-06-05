@@ -17,7 +17,7 @@ To live the dream, you don't need much:
 - You don't need magic "clustering" infrastructure.
 - You don't need a queue system.
 - You don't need a message bus or fancy IPC.
-- You don't even need multiple instances of your server running.
+- *You don't even need multiple instances of your server running.*
 
 All you need is a couple old-school Unix tricks.
 
