@@ -3,7 +3,9 @@
 
 They're not hard to do. So why do most shops struggle on, afraid to deploy because the site will be unavailable, in an inconsistent state, or both during a deployment window? Let's conquer our fear! Let's deploy whenever we damn well feel like it.
 
-![I'm Not Afraid Anymore](./img/donnie-darko-not-afraid-anymore-meme.jpg)
+<div style="text-align:center">
+<img src="./img/donnie-darko-not-afraid-anymore-meme.jpg" width="100%"/>
+</div>
 
 This is a tiny demo project. It's purpose is to convince you that Dream Deploys are not only possible, they're easy.
 
