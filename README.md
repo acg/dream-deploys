@@ -71,7 +71,7 @@ The trick in a nutshell, then, is this:
 
 Fine, but take care that at least one server process is always running at any given time. This means some handoff coordination between the old and new server processes. Alternately, you could run an unrelated process on the port that just listens.
 
-At any rate, an `accept(2)`-based server is simpler, and has the added benefit of making your server network-agnostic. For instance, you can run your `accept(2)`-based server behind a Unix domain socket without modifying a single line of code.
+At any rate, an `accept(2)`-based server is simpler. It also has the added benefit of making your server network-agnostic. For instance, you can run your `accept(2)`-based server behind a Unix domain socket without modifying a single line of code.
 
 #### How does the atomic part work?
 
