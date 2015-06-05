@@ -63,7 +63,15 @@ The trick in a nutshell, then, is this:
 
 - When it's time to restart the server process, we tell the server to exit after handling the current connection, if any. That way deployment doesn't disrupt any pending requests. We tell the server process to gracefully exit by sending it a `SIGHUP` signal.
 
-**Note**: a shocking, saddening number of web frameworks force you to call `listen(2)` in your Big Ball Of App Code That Needs To Be Restarted. "I'll just use the new [`SO_REUSEPORT` socket option in Linux](https://lwn.net/Articles/542629/)!" you say. Fine, but you'll need to be careful that at least one server process is always running at any given time. This means some handoff coordination between the old and new server processes. Alternately you could run an unrelated process on the port that just listens. At any rate, an `accept(2)`-based server is much simpler.
+##### SO_REUSEPORT and a Quick Rant on Web Frameworks
+
+**Note**: a shocking, saddening number of web frameworks force you to call `listen(2)` in your Big Ball Of App Code That Needs To Be Restarted.
+
+"I'll just use the new [`SO_REUSEPORT` socket option in Linux](https://lwn.net/Articles/542629/)!" you say.
+
+Fine, but take care that at least one server process is always running at any given time. This means some handoff coordination between the old and new server processes. Alternately, you could run an unrelated process on the port that just listens.
+
+At any rate, an `accept(2)`-based server is simpler, and has the added benefit of making your server network-agnostic. For instance, you can run your `accept(2)`-based server behind a Unix domain socket without modifying a single line of code.
 
 #### How does the atomic part work?
 
