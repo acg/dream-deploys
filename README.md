@@ -74,7 +74,7 @@ While we're updating the new static files, we don't want the server to start ser
 <p>&nbsp;</p>
 </div>
 
-There are a number of [things Unix can do atomically](http://rcrowley.org/2010/01/06/things-unix-can-do-atomically.html). Among them: use `rename(2)` to replace a symlink with another symlink. If the "switch" is a simply a symlink pointing at one directory of files versus the other, then we deployments are atomic. This is Unix trick #2.
+There are a number of [things Unix can do atomically](http://rcrowley.org/2010/01/06/things-unix-can-do-atomically.html). Among them: use `rename(2)` to replace a symlink with another symlink. If the "switch" is a simply a symlink pointing at one directory of files versus the other, then deployments are atomic. This is Unix trick #2.
 
 #### What about concurrency? Your example only serves one connection at a time.
 
