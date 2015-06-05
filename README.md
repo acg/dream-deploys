@@ -78,6 +78,32 @@ While we're updating the new files, no server process should use them. If the ol
 
 There are a number of [things Unix can do atomically](http://rcrowley.org/2010/01/06/things-unix-can-do-atomically.html). Among them: use `rename(2)` to replace a symlink with another symlink. If the "switch" is a simply a symlink pointing at one directory or the other, then deployments are atomic. This is Unix trick #2.
 
+#### What about serving inconsistent assets? Browsers open multiple connections.
+
+This is a problem, but there's also a straightforward solution.
+
+Let's clarify the problem first: during a deployment, a client may request a page from the old server, then open more connections that request assets from the new server. (Remember, consistency is only guaranteed within the same connection.) So you can get old page content mixed with new css, js, images, etc.
+
+In the prevailing practice, the solution is to build a new tagged set of static assets for every deployment, then have the page refer to all assets via this tag. You can do this by modifying the [`./deploy` script](./deploy) to do this, like so:
+
+- Update the new files.
+- Generate a unique tag `$TAG`. Epoch timestamps are usually good enough.
+- Record `$TAG` in a file inside the new file directory.
+- Copy all the static assets into a new directory `assets.$TAG` outside of both file copies.
+- Continue with the deployment.
+
+When the server starts up, it should read `$TAG` from the file, and make sure all asset URLs it generates contain `$TAG`.
+
+That's pretty much it. Eventually you'll want to delete them, but if you keep the old `assets.$TAG` directories around for a while, even sessions that haven't reloaded the page will continue to get consistent results across deployments.
+
+The long term solution to this problem is [HTTP/2 multiplexing](https://http2.github.io/faq/#why-is-http2-multiplexed), which makes multiple browser connections unnecessary.
+
+#### What about serving inconsistent ajax requests?
+
+Let's clarify this problem: during a deployment, a client may request a page from the old server, then open more connections that make ajax requests of the new server using old client code.
+
+There's a less technical solution to this one: simply make your API backwards compatible. This is a good idea regardless.
+
 #### What about concurrency? Your example only serves one connection at a time.
 
 You can run as many `accept(2)`-calling server processes as you want on the same listen socket. The kernel will efficiently multiplex connections to them.
