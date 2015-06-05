@@ -14,13 +14,9 @@ This is a tiny demo to convince you that Dream Deploys are not only possible, th
 To live the dream, you don't need much:
 
 - You don't need a fancy load balancer.
-
 - You don't need magic "clustering" infrastructure.
-
 - You don't need a queue system.
-
 - You don't need a message bus or fancy IPC.
-
 - You don't even need multiple instances of your server running.
 
 All you need is a couple old-school Unix tricks.
