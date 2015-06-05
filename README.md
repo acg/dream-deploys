@@ -31,7 +31,9 @@ In serving a request, either you will talk to the new code working against the n
 
 #### How does the zero downtime part work?
 
-This brings us to Unix trick #1. If you keep the same listen socket open throughout the deployment, clients won't get `ECONNREFUSED` under normal circumstances. The kernel places them in a listen backlog until our server calls `accept(2)`. This means however that our server process can't be the thing to call `listen(2)` if we want to stop and start it, or we'll incur visible downtime. Something else -- some long running process -- must call `listen(2)` and keep the listen socket open across deployments.
+This brings us to Unix trick #1. If you keep the same listen socket open throughout the deployment, clients won't get `ECONNREFUSED` under normal circumstances. The kernel places them in a listen backlog until our server gets around to calling `accept(2)`.
+
+This means, however, that our server process can't be the thing to call `listen(2)` if we want to stop and start it, or we'll incur visible downtime. Something else – some long running process – must call `listen(2)` and keep the listen socket open across deployments.
 
 The trick in a nutshell, then, is this:
 
@@ -43,6 +45,8 @@ The trick in a nutshell, then, is this:
 
 - When it's time to restart the server process, we tell the server to exit after handling the current connection, if any. That way deployment doesn't disrupt any pending requests. We tell the server process to gracefully exit by sending it a `SIGHUP` signal.
 
+Note: the number of web frameworks that force you to call `listen(2)` in your Big Ball Of App Code That Needs To Be Restarted is shocking and saddening.
+
 #### How does the atomic part work?
 
 A given request will either be served by the old server process or the new server process. The question is whether the old process might possibly see new static files, or the new process might see old static files. We can't update any of the static files in-place, or one or the other problematic scenario will happen. This forces us to keep two complete copies of the static files, an old copy and a new copy.
@@ -53,7 +57,9 @@ There are a number of [things Unix can do atomically](http://rcrowley.org/2010/0
 
 #### What about concurrency? Your example only serves one connection at a time.
 
-You can run as many `accept(2)`-calling server processes as you want on the same listen socket. The kernel will efficiently multiplex connections to them. In production I use a small program I wrote called `forkpool` that keeps N concurrent child processes running and nothing more.
+You can run as many `accept(2)`-calling server processes as you want on the same listen socket. The kernel will efficiently multiplex connections to them.
+
+In production, I use a small program I wrote called `forkpool` that keeps N concurrent child processes running. It doesn't do anything beyond this, which means it doesn't have any bugs at this point and never needs restarting. Remember, children are a precious resource, but without a parent to keep that listen socket open they're *orphans*.
 
 #### What about deployment collisions?
 
