@@ -89,5 +89,5 @@ Yes, you really should prevent concurrent deployments via a lock. That's not dem
 
 #### What about deploying database schema changes?
 
-This topic has been covered well elsewhere, [like here](https://blog.rainforestqa.com/2014-06-27-zero-downtime-database-migrations/).
+This topic has been covered [well elsewhere](https://blog.rainforestqa.com/2014-06-27-zero-downtime-database-migrations/).
 
