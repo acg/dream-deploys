@@ -66,16 +66,16 @@ The trick in a nutshell, then, is this:
 
 #### How does the atomic part work?
 
-A given request will either be served by the old server process or the new server process. The question is whether the old process might possibly see new static files, or the new process might see old static files. We can't update any of the static files in-place, or one of these problematic scenarios will happen. This forces us to keep two complete copies of the static files, an old copy and a new copy.
+A given request will either be served by the old server process or the new server process. The question is whether the old process might possibly see new files, or the new process might see old files. If we update files in-place then one of these inconsistencies can happen. This forces us to keep two complete copies of the files, an old copy and a new copy.
 
-While we're updating the new static files, we don't want the server to start serving them. If the old server process is restarted at this point, intentionally or accidentally, it should continue to serve the old static files. The trick, then, is to make the "throw the switch" act of cutting over from old to new files atomic.
+While we're updating the new files, no server process should use them. If the old server process is restarted during this phase, intentionally or accidentally, it should continue to work off the old files. When the new copy is finally ready, we want to "throw the switch": deactivate the old files and simultaneously activate the new files for future server processes. The trick is to make throwing the switch an atomic operation.
 
 <div style="text-align:center;">
 <img src="./img/mad-scientist-with-switch.jpg" width="100%"/>
 <p>&nbsp;</p>
 </div>
 
-There are a number of [things Unix can do atomically](http://rcrowley.org/2010/01/06/things-unix-can-do-atomically.html). Among them: use `rename(2)` to replace a symlink with another symlink. If the "switch" is a simply a symlink pointing at one directory of files versus the other, then deployments are atomic. This is Unix trick #2.
+There are a number of [things Unix can do atomically](http://rcrowley.org/2010/01/06/things-unix-can-do-atomically.html). Among them: use `rename(2)` to replace a symlink with another symlink. If the "switch" is a simply a symlink pointing at one directory or the other, then deployments are atomic. This is Unix trick #2.
 
 #### What about concurrency? Your example only serves one connection at a time.
 
