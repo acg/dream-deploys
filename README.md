@@ -69,7 +69,7 @@ A given request will either be served by the old server process or the new serve
 
 While we're updating the new static files, we don't want the server to start serving them. If the old server process is restarted at this point, intentionally or accidentally, it should continue to serve the old static files. The trick, then, is to make the "throw the switch" act of cutting over from old to new files atomic.
 
-<div style="text-align:center">
+<div style="text-align:center;margin-bottom:20px">
 <img src="./img/mad-scientist-with-switch.jpg" width="100%"/>
 </div>
 
