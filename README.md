@@ -3,7 +3,21 @@
 
 They're not hard to do. So why do most shops struggle on, afraid to deploy because the site will be unavailable, in an inconsistent state, or both during a deployment window? Let's conquer our fear! Let's deploy whenever we damn well feel like it.
 
-This is a tiny demo project. It's purpose is to convince you that Dream Deploys are not only possible, they're easy. You don't need a fancy load balancer. You don't need magic "clustering" infrastructure. You don't even need multiple instances of your server running. All you need is a couple old-school Unix tricks.
+This is a tiny demo project. It's purpose is to convince you that Dream Deploys are not only possible, they're easy.
+
+To live the dream, you don't need much:
+
+- You don't need a fancy load balancer.
+
+- You don't need magic "clustering" infrastructure.
+
+- You don't need a queue system.
+
+- You don't need a message bus or fancy IPC.
+
+- You don't even need multiple instances of your server running.
+
+All you need is a couple old-school Unix tricks.
 
 ## A Quick Demo
 
