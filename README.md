@@ -45,7 +45,7 @@ At no point is the site unavailable. Requests will continue to be served without
 
 #### What do you mean by an "atomic" deployment?
 
-In serving a request, either you will talk to the new code working against the new static files, or you will talk to the old code working against the old static files. You will never see a mix of old and new.
+For a given connection, either you will talk to the new code working against the new files, or you will talk to the old code working against the old files. You will never see a mix of old and new.
 
 #### How does the zero downtime part work?
 
@@ -67,7 +67,7 @@ The trick in a nutshell, then, is this:
 
 #### How does the atomic part work?
 
-A given request will either be served by the old server process or the new server process. The question is whether the old process might possibly see new files, or the new process might see old files. If we update files in-place then one of these inconsistencies can happen. This forces us to keep two complete copies of the files, an old copy and a new copy.
+A connection will either be served by the old server process or the new server process. The question is whether the old process might possibly see new files, or the new process might see old files. If we update files in-place then one of these inconsistencies can happen. This forces us to keep two complete copies of the files, an old copy and a new copy.
 
 While we're updating the new files, no server process should use them. If the old server process is restarted during this phase, intentionally or accidentally, it should continue to work off the old files. When the new copy is finally ready, we want to "throw the switch": deactivate the old files and simultaneously activate the new files for future server processes. The trick is to make throwing the switch an atomic operation.
 
