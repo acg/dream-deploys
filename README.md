@@ -69,6 +69,10 @@ A given request will either be served by the old server process or the new serve
 
 While we're updating the new static files, we don't want the server to start serving them. If the old server process is restarted at this point, intentionally or accidentally, it should continue to serve the old static files. The trick, then, is to make the "throw the switch" act of cutting over from old to new files atomic.
 
+<div style="text-align:center">
+<img src="./img/mad-scientist-with-switch.jpg" width="100%"/>
+</div>
+
 There are a number of [things Unix can do atomically](http://rcrowley.org/2010/01/06/things-unix-can-do-atomically.html). Among them: use `rename(2)` to replace a symlink with another symlink. If the "switch" is a simply a symlink pointing at one directory of files versus the other, then we deployments are atomic. This is Unix trick #2.
 
 #### What about concurrency? Your example only serves one connection at a time.
