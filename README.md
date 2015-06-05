@@ -63,7 +63,7 @@ The trick in a nutshell, then, is this:
 
 - When it's time to restart the server process, we tell the server to exit after handling the current connection, if any. That way deployment doesn't disrupt any pending requests. We tell the server process to gracefully exit by sending it a `SIGHUP` signal.
 
-##### SO_REUSEPORT and a Quick Rant on Web Frameworks
+##### A Quick Rant on Web Frameworks and SO_REUSEPORT
 
 **Note**: a shocking, saddening number of web frameworks force you to call `listen(2)` in your Big Ball Of App Code That Needs To Be Restarted.
 
