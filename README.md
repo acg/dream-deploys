@@ -79,3 +79,7 @@ In production, I use a small program I wrote called `forkpool` that keeps N conc
 
 Yes, you really should prevent concurrent deployments via a lock. That's not demonstrated here, but it's extremely easy and reliable to do with [the setlock(8) program from daemontools](http://cr.yp.to/daemontools/setlock.html).
 
+#### What about deploying database schema changes?
+
+This topic has been covered well elsewhere, [like here](https://blog.rainforestqa.com/2014-06-27-zero-downtime-database-migrations/).
+
