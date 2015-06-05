@@ -41,11 +41,11 @@ Edit code, static files, or both under `./root.unused`. Then leave `./root.unuse
 
 #### What do you mean by a "zero downtime" deployment?
 
-At no point is the site unavailable. Requests will continue to be served without transport layer errors before, during, and after the deployment. (This is about **Availability**.)
+At no point is the site unavailable. Requests will continue to be served without transport layer errors before, during, and after the deployment. In other words, this is about **Availability**.
 
 #### What do you mean by an "atomic" deployment?
 
-For a given connection, either you will talk to the new code working against the new files, or you will talk to the old code working against the old files. You will never see a mix of old and new. (This is about **Consistency**.)
+For a given connection, either you will talk to the new code working against the new files, or you will talk to the old code working against the old files. You will never see a mix of old and new. In other words, this is about **Consistency**.
 
 #### How does the zero downtime part work?
 
