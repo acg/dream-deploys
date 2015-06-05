@@ -37,7 +37,7 @@ In a second terminal, deploy whenever you want:
 
 Refresh the page to see it change.
 
-Edit code, static files, or both under `./root.unused`. Run `./deploy` to see your changes appear atomically and with zero downtime.
+Edit code, static files, or both under `./root.unused`. Then leave `./root.unused` and run `./deploy` to see your changes appear atomically and with zero downtime.
 
 ## Questions & Answers
 
