@@ -71,7 +71,11 @@ The trick in a nutshell, then, is this:
 
 Fine, but take care that at least one server process is always running at any given time. This means some handoff coordination between the old and new server processes. Alternately, you could run an unrelated process on the port that just listens.
 
-At any rate, an `accept(2)`-based server is simpler. It also has the added benefit of making your server network-agnostic. For instance, you can run your `accept(2)`-based server behind a Unix domain socket without modifying a single line of code.
+At any rate, an `accept(2)`-based server is simpler. It also has some nice added benefits unrelated to deployments:
+
+- An `accept(2)`-based server is network-agnostic. For instance, you can run it behind a Unix domain socket without modifying a single line of code.
+
+- An `accept(2)`-based server is a more secure factoring of concerns. If your server listens directly on a privileged port (80 or 443), you'll need root privileges or a fancy capabilities setup. After binding, a listen server should also drop root privileges (horrifyingly, some don't). The `accept(2)` factoring means a tiny, well-audited program can bind to the privileged port, drop privileges to a minimally empowered user account, and run a known program. This is a huge security win.
 
 #### How does the atomic part work?
 
