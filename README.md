@@ -1,5 +1,4 @@
-# Dream Deploys
-## Atomic, Zero Downtime Deployments
+## Dream Deploys: Atomic, Zero-Downtime Deployments
 
 They're not hard to do. So why do most shops struggle on, afraid to deploy because the site will be unavailable, in an inconsistent state, or both during a deployment window? Let's conquer our fear! Let's deploy whenever we damn well feel like it.
 
