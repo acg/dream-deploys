@@ -1,8 +1,8 @@
 ## Dream Deploys: Atomic, Zero-Downtime Deployments
 
-They're not hard to do. So why do most shops struggle on, afraid to deploy because the site during the deployment window will be unavailable, in an inconsistent state, or both?
+Are you afraid to deploy? Do deployments always mean downtime, leaving your site in an inconsistent state for a window of time, or both? It doesn't have to be this way!
 
-Let's conquer our fear! Let's deploy whenever we damn well feel like it.
+Let's conquer our fear. Let's deploy whenever we damn well feel like it.
 
 <div style="text-align:center">
 <img src="./img/donnie-darko-not-afraid-anymore.jpg" width="100%"/>
