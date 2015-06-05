@@ -16,6 +16,7 @@ To live the dream, you don't need much:
 
 - You don't need a fancy load balancer.
 - You don't need magic "clustering" infrastructure.
+- You don't need a specific language or framework.
 - You don't need a queue system.
 - You don't need a message bus or fancy IPC.
 - *You don't even need multiple instances of your server running.*
