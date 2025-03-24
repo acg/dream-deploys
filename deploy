@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 # Determine which of [root.a,root.b] is the current root,
 # and which will be the new root.
 root_cur=`readlink root`
