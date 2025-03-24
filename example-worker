@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 '''
 A barebones HTTP server that calls accept(2) on a stdin listen socket.
 '''
@@ -12,42 +12,42 @@ def main():
   signal.signal(signal.SIGHUP, signal_handler)
   s = socket.fromfd(0, socket.AF_INET, socket.SOCK_STREAM)
   count = 1
-  print >> sys.stderr, 'worker %d' % os.getpid()
+  print('worker %d' % os.getpid(), file=sys.stderr)
   while not got_sighup:
     # Accept a client connection and read an HTTP request.
     try:
       c, addr = s.accept()
-    except socket.error, e:
+    except socket.error as e:
       if e.errno == errno.EINTR or e.errno == errno.EAGAIN:
         continue
       else:
         raise
-    print >> sys.stderr, 'worker %d request %d' % (os.getpid(),count)
+    print('worker %d request %d' % (os.getpid(),count), file=sys.stderr)
     count += 1
     # Note: retrying a read interrupted by a signal is
     # typically more subtle than this example.
-    req = ''
+    req = b''
     while not req:
       try:
         req += c.recv(4096)
-      except socket.error, e:
+      except socket.error as e:
         if e.errno == errno.EINTR or e.errno == errno.EAGAIN:
           continue
     # Generate an HTTP response and write it back.
-    m = re.compile('^GET (\S+) HTTP/1.1\r?\n').match(req)
+    m = re.compile(r'^GET (\S+) HTTP/1.1\r?\n').match(req.decode())
     path = htdocs+'/'+m.group(1).lstrip('/') if m else None
     if path:
       try:
-        rsp = 'HTTP/1.1 200 OK\r\n\r\n'+file(path).read()
-      except IOError, e:
+        rsp = b'HTTP/1.1 200 OK\r\n\r\n'+open(path, 'rb').read()
+      except IOError as e:
         if e.errno == errno.ENOENT:
-          rsp = 'HTTP/1.1 404 Not Found\r\n\r\n'
+          rsp = b'HTTP/1.1 404 Not Found\r\n\r\n'
         elif e.errno == errno.EACCES:
-          rsp = 'HTTP/1.1 403 Forbidden\r\n\r\n'
+          rsp = b'HTTP/1.1 403 Forbidden\r\n\r\n'
         else:
           raise
     else:
-      rsp = 'HTTP/1.1 501 Not Implemented\r\n\r\n'
+      rsp = b'HTTP/1.1 501 Not Implemented\r\n\r\n'
     c.send(rsp)
     c.close()
   return 0
